@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FORME — Design tokens
+   Warm, editorial, quietly expensive.
+   ============================================================ */
+@theme {
+  /* Surfaces */
+  --color-cream: #f5efe4;
+  --color-sand: #ebe3d4;
+  --color-linen: #e3d9c6;
+  --color-fog: #cdc3b1;
+
+  /* Warm neutrals */
+  --color-mushroom: #a8987e;
+  --color-taupe: #7a6e5a;
+  --color-clay: #9a7f66;
+
+  /* Ink */
+  --color-espresso: #3a342b;
+  --color-ink: #2a2620;
+
+  /* Semantic */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-ink);
+
+  /* Type */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion */
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  ::selection {
+    background: var(--color-taupe);
+    color: var(--color-cream);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 340;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  /* Eyebrow / kicker label */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Editorial italic accent inside display headings */
+  .accent {
+    font-style: italic;
+    font-weight: 340;
+  }
+
+  /* Nav link with animated underline */
+  .nav-link {
+    position: relative;
+    transition: opacity 0.4s var(--ease-luxe);
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-luxe);
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Hairline divider */
+  .hairline {
+    height: 1px;
+    background: color-mix(in oklab, var(--color-taupe) 35%, transparent);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    transition:
+      background 0.5s var(--ease-luxe),
+      color 0.5s var(--ease-luxe),
+      transform 0.5s var(--ease-luxe),
+      border-color 0.5s var(--ease-luxe);
+    will-change: transform;
+  }
+  .btn-solid {
+    background: var(--color-espresso);
+    color: var(--color-cream);
+  }
+  .btn-solid:hover {
+    background: var(--color-ink);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    border: 1px solid color-mix(in oklab, var(--color-espresso) 55%, transparent);
+    color: var(--color-espresso);
+  }
+  .btn-outline:hover {
+    background: var(--color-espresso);
+    color: var(--color-cream);
+    transform: translateY(-2px);
+  }
+  .btn-light {
+    border: 1px solid color-mix(in oklab, #fff 60%, transparent);
+    color: var(--color-cream);
+  }
+  .btn-light:hover {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    transform: translateY(-2px);
+  }
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s var(--ease-luxe),
+    transform 1s var(--ease-luxe);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+/* Slow zoom for hero media */
+@keyframes slow-zoom {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.16);
+  }
+}
+.animate-slow-zoom {
+  animation: slow-zoom 22s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee,
+  .animate-slow-zoom {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Thin, elegant scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-fog);
+  border-radius: 999px;
+  border: 3px solid var(--color-cream);
+}
