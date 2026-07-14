@@ -32,6 +32,25 @@
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ============================================================
+   WINE variant — deep burgundy + warm ivory (Vogue / editorial).
+   Overriding the color tokens re-themes every component at once,
+   since all utilities reference these CSS variables.
+   ============================================================ */
+html[data-theme="wine"] {
+  --color-cream: #f8f1ea;
+  --color-sand: #f1e2dd;
+  --color-linen: #e9d5d0;
+  --color-fog: #cdb2ae;
+
+  --color-mushroom: #c98d97;
+  --color-taupe: #8a5560;
+  --color-clay: #9c5763;
+
+  --color-espresso: #571d2c;
+  --color-ink: #3a1520;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

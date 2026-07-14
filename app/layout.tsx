@@ -3,6 +3,7 @@ import { Fraunces, Jost } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { site } from "@/lib/site";
 
 const fraunces = Fraunces({
@@ -38,14 +39,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${fraunces.variable} ${jost.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
+        {/* Apply the saved palette before paint to avoid a flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('forme-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}",
+          }}
+        />
         {/* If JS is unavailable, scroll-reveal can never fire — force content
             visible so nothing is permanently hidden. */}
         <noscript>
           <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
         </noscript>
+        <ThemeToggle />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
